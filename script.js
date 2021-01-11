@@ -74,6 +74,31 @@ function encriptarTxt() {
 }
 function decriptarTxt() {
     // Para descriptografar o texto escrito
+    let lc = 0; 
+    let iLetraChave = 0;
+    let txtEncriptar = "";
+    let txtDecriptar = campoDecriptar.value.toUpperCase();
+    let igual;
+    for (let l of txtDecriptar) {
+        if (l == " ") {
+            txtEncriptar += " ";
+        } else {
+            iLetraChave = retornaIndice(chave[lc]);
+            igual = false;
+            for (let i = 0; !igual; i++) {
+                if (vigenere[i][iLetraChave] == l) {
+                    txtEncriptar += vigenere[i][0];
+                    igual = true;
+                    if (lc == chave.length - 1) {
+                        lc = 0;
+                    } else {
+                        lc++;
+                    }
+                }
+            }
+        }
+    }
+    campoEncriptar.value = txtEncriptar;
 }
 function retornaIndice(letra) {
     // Retorna o índice da letra de acordo com o alfabeto
