@@ -44,8 +44,8 @@ btnSetSenha.addEventListener('click', setSenha);
 
 // Requisitos iniciais do software
 window.onload = function () {
-    //setSenha();
-    //setChave();
+    setSenha();
+    setChave();
 }
 
 // Functions
@@ -56,7 +56,6 @@ function encriptarTxt() {
     let iLetraChave = 0;
     let txtEncriptar = campoEncriptar.value.toUpperCase();
     let txtDecriptar = "";
-    alert(txtEncriptar.replace(/ /g,""));
     for (let l of txtEncriptar) {
         if (l == " ") {
             txtDecriptar += " ";
@@ -136,19 +135,38 @@ function setChave() {
     // Para mudar chave da criptografia
     if (chave == "") {
         // Configurando a chave no caso de primeiro acesso
-        chave = prompt("Crie uma chave válida.\n*Pode ser qualquer palavra ou frase\n*Não pode conter números\n*Não pode conter caracteres especiais\n*Digite as palavras sem acentos\nInsira a chave:");
-        alert("Nova chave definida.");
+        let valido = false;
+        while (!valido) {
+            let reqChave = prompt("Crie uma chave válida.\n*Pode ser qualquer palavra ou frase\n*Não pode conter números\n*Não pode conter caracteres especiais\n*Digite as palavras sem acentos\n*Não pode estar em branco\nInsira a chave:");
+            if (reqChave == "") {
+                alert("A chave não pode estar em branco.\nDefina uma chave válida.");
+            } else {
+                chave = reqChave;
+                alert("Nova chave definida.");
+                valido = true;
+            }
+        }
     } else {
         // Configurando a chave no caso de não ser primeiro acesso
         let reqSenha = prompt("Para alterar a chave é necessária autenticação.\nDigite sua senha:");
         if (reqSenha != senha) {
             alert("Senha incorreta!\nVocê não pode alterar a chave.");
         } else {
-            chave = prompt("Crie uma nova chave.\n*Pode ser qualquer palavra ou frase\n*Não pode conter números\n*Não pode conter caracteres especiais\n*Digite as palavras sem acentos\nInsira a nova chave:");
-            alert("Nova chave definida.");
+            let valido = false;
+            while (!valido) {
+                let reqChave = prompt("Crie uma chave válida.\n*Pode ser qualquer palavra ou frase\n*Não pode conter números\n*Não pode conter caracteres especiais\n*Digite as palavras sem acentos\n*Não pode estar em branco\nInsira a chave:");
+                if (reqChave == "") {
+                    alert("A chave não pode estar em branco.\nDefina uma chave válida.");
+                } else {
+                    chave = reqChave;
+                    alert("Nova chave definida.");
+                    valido = true;
+                }
+            }
         }
     }
-    chave = chave.toUpperCase();
+    // A linha abaixo coloca a chave em maiúsculo e tira os espaços
+    chave = chave.toUpperCase().replace(/ /g,"");
 }
 function setSenha() {
     // Configura a senha de usuário
